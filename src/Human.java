@@ -8,29 +8,30 @@ public class Human {
         }
     }
 
-    private int heightInInches;
-    private int weightInPounds;
+    private double heightInInches;
+    private double weightInPounds;
     private Gender gender;
+    private Gender expectedGender;
 
-    public Human(int heightInInches, int weightInPounds, Gender gender) {
+    public Human(double heightInInches, double weightInPounds, Gender gender) {
         this.heightInInches = heightInInches;
         this.weightInPounds = weightInPounds;
         this.gender = gender;
     }
 
-    public int getHeightInInches() {
+    public double getHeightInInches() {
         return heightInInches;
     }
 
-    public void setHeightInInches(int heightInInches) {
+    public void setHeightInInches(double heightInInches) {
         this.heightInInches = heightInInches;
     }
 
-    public int getWeightInPounds() {
+    public double getWeightInPounds() {
         return weightInPounds;
     }
 
-    public void setWeightInPounds(int weightInPounds) {
+    public void setWeightInPounds(double weightInPounds) {
         this.weightInPounds = weightInPounds;
     }
 
@@ -42,12 +43,26 @@ public class Human {
         this.gender = gender;
     }
 
+    public Gender getExpectedGender() { return expectedGender; }
+
+    public void setExpectedGender(Gender expectedGender) { this.expectedGender = expectedGender; }
+
+    public void setExpectedGender(){
+        double y = (5.0/3.0)*heightInInches + 38.33;
+        if(weightInPounds >= y){
+            expectedGender = Gender.MALE;
+        }
+        else{
+            expectedGender = Gender.FEMALE;
+        }
+    }
+
+    public boolean calculateGenderPredictionForAccuracy(){
+        return expectedGender == gender;
+    }
+
     @Override
     public String toString() {
-        return "Human{" + "\n" +
-                "heightInInches = " + heightInInches + ",\n" +
-                "weightInPounds = " + weightInPounds + ",\n" +
-                "gender = " + gender + "\n" +
-                "}" + "\n";
+        return String.format("%.2f,%.2f,%d\n", getHeightInInches(), getWeightInPounds(), getGender() == Gender.MALE ? 0 : 1);
     }
 }
